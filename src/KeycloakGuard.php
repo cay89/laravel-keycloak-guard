@@ -18,9 +18,9 @@ class KeycloakGuard implements Guard
     protected $decodedToken;
     protected Request $request;
 
-    public function __construct(UserProvider $provider, Request $request)
+    public function __construct(UserProvider $provider, Request $request, array $config)
     {
-        $this->config = config('keycloak');
+        $this->config = $config;
         $this->user = null;
         $this->provider = $provider;
         $this->decodedToken = null;
