@@ -355,7 +355,11 @@ class AuthenticateTest extends TestCase
         config(['keycloak.user_provider_custom_retrieve_method' => 'custom_retrieve']);
 
         Auth::extend('keycloak', function ($app, $name, array $config) {
-            return new KeycloakGuard(new CustomUserProvider(new BcryptHasher(), User::class), $app->request);
+            return new KeycloakGuard(
+                new CustomUserProvider(new BcryptHasher(), User::class), 
+                $app->request, 
+                config('keycloak')
+            );
         });
 
         $this->withKeycloakToken()->json('GET', '/foo/secret');
